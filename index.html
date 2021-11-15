@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The Recognizer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<h1>Object Detection</h1>
+<section id="demos">
+    <!-- <div id="liveView" >
+    <button id="webcamButton" class="invisible">Loading...</button>
+        <video id="webcam" class="background" playsinline crossorigin="anonymous"></video>
+    </div> -->
+
+    <div className="App">
+        <header className="App-header">
+          <Webcam 
+            style="position: absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;text-align: center;z-index: 9;width: 640;height: 480;"
+            id = "webcamid"
+          />
+  
+          <canvas
+          style="position: absolute;margin-left: auto;margin-right: auto;left: 0;right: 0;text-align: center;z-index: 8;width: 640;height: 480;"
+          id = "canvasid"
+          ></canvas>
+        </header>
+      </div>
+</section>
+<!-- Import TensorFlow.js library -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script-->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.4.0/dist/tf.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
