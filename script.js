@@ -83,7 +83,7 @@ const detect = async (net) => {
 // Main function
 const runCoco = async () => {
   // 3. TODO - Load network 
-  const net = await tf.loadGraphModel("https://storage.googleapis.com/mybucket_tfjs/model.json")
+  const net = await tf.loadGraphModel("./tfjsexportmodel/model.json")
 
   // console.log(net)
   
