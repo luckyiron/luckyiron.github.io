@@ -146,17 +146,19 @@ var classProbThreshold = 0.75;//40%
 //Image detects object that matches the preset:
 async function detectTFMOBILE(imgToPredict) {
 
+    
+
     //Get next video frame:
     await tf.nextFrame();
     //Create tensor from image:
     const tfImg = tf.browser.fromPixels(imgToPredict);
 
     //Create smaller image which fits the detection size
-    const smallImg = tf.image.resizeBilinear(tfImg, [320,320]);
+    const smallImg = tf.image.resizeBilinear(tfImg, [video.videoHeight,video.videoWidth]);
 
 
     const resized = tf.cast(smallImg, 'int32');
-    var tf4d_ = tf.tensor4d(Array.from(resized.dataSync()), [1,320, 320, 3]);
+    var tf4d_ = tf.tensor4d(Array.from(resized.dataSync()), [1,video.videoHeight, video.videoWidth, 3]);
     const tf4d = tf.cast(tf4d_, 'int32');
 
     //Perform the detection with your layer model:
@@ -176,6 +178,8 @@ async function detectTFMOBILE(imgToPredict) {
     smallImg.dispose();
     resized.dispose();
     tf4d.dispose();
+    tf.dispose(predictions);
+    
     
 }
 
