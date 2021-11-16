@@ -149,11 +149,11 @@ async function detectTFMOBILE(imgToPredict) {
     const tfImg = tf.browser.fromPixels(imgToPredict);
 
     //Create smaller image which fits the detection size
-    const smallImg = tf.image.resizeBilinear(tfImg, [video.videoHeight,video.videoWidth]);
+    const smallImg = tf.image.resizeBilinear(tfImg, [video.videoHeight/2,video.videoWidth/2]);
 
 
     const resized = tf.cast(smallImg, 'int32');
-    var tf4d_ = tf.tensor4d(Array.from(resized.dataSync()), [1,video.videoHeight, video.videoWidth, 3]);
+    var tf4d_ = tf.tensor4d(Array.from(resized.dataSync()), [1,video.videoHeight/2, video.videoWidth/2, 3]);
     const tf4d = tf.cast(tf4d_, 'int32');
 
     //Perform the detection with your layer model:
