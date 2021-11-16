@@ -37,7 +37,9 @@ function enableCam(event) {
     // getUsermedia parameters to force video but not audio.
     const constraints = {
       video: {
-        facingMode: "environment"
+        facingMode: "environment" ,
+        width: { exact: 1080 }, 
+        height: { exact: 1920 }
       },
     };
   
@@ -99,9 +101,9 @@ function renderPredictionBoxes (predictionBoxes, predictionClasses, predictionSc
 //If we are over 66% sure we are sure we classified it right, draw it!
         
 //If confidence is above 70%
-        if (predictionScores[i]*100 > 70 && predictionScores[i]*100 < 100){
-            console.log("hi",video.videoWidth,video.videoHeight)
-            console.log(predictionBoxes[i],predictionClasses[i],predictionScores[i])
+        if (predictionScores[i]*100 > 75 && predictionScores[i]*100 <= 100){
+            // console.log("hi",video.videoWidth,video.videoHeight)
+            // console.log(predictionBoxes[i],predictionClasses[i],predictionScores[i])
 
         const minY = (predictionBoxes[i][0] * video.videoHeight).toFixed(0);
         const minX = (predictionBoxes[i][1] * video.videoWidth).toFixed(0);
