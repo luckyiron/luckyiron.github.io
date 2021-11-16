@@ -38,8 +38,8 @@ function enableCam(event) {
     const constraints = {
       video: {
         facingMode: "environment" ,
-        width: { ideal: 1080 }, 
-        height: { ideal: 1920 }
+        width: { ideal: 2000 }, 
+        height: { ideal: 900 }
       },
     };
   
