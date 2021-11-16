@@ -38,14 +38,15 @@ function enableCam(event) {
     const constraints = {
       video: {
         facingMode: "environment" ,
-        width: { exact: 1080 }, 
-        height: { exact: 1920 }
+        width: { ideal: 1080 }, 
+        height: { ideal: 1920 }
       },
     };
   
     // Activate the webcam stream.
     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
       video.srcObject = stream;
+      window.alert("hi"+$video.videoWidth.toString()+$video.videoHeight.toString());
       video.addEventListener('loadeddata', predictWebcamTF);
     });
   }
