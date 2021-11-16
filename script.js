@@ -59,11 +59,7 @@ function enableCam(event) {
     
       // Now let's start classifying a frame in the stream.
     detectTFMOBILE(video).then(function () {
-      if (k=0){
-        resolution_log=document.getElementById("resoultioncheckid")
-        resolution_log.innerHTML="hi width: "+video.videoWidth.toString()+ " height: " +video.videoHeight.toString()
-      k=1
-      }
+      
         // Call this function again to keep predicting when the browser is ready.
         window.requestAnimationFrame(predictWebcamTF);
     });
@@ -131,7 +127,7 @@ function renderPredictionBoxes (predictionBoxes, predictionClasses, predictionSc
             'top: ' + minY + 'px; ' +
             'width: ' + width_ + 'px; ' +
             'height: ' + height_ + 'px;';
-        highlighter.innerHTML = '<p>'+Math.round(score) + '% ' + 'foot'+'</p>';
+        highlighter.innerHTML = '<p>'+Math.round(score) + '% ' + 'foot'+"width:"+video.videoWidth.toString()+ " height:" +video.videoHeight.toString() +'</p>';
         liveView.appendChild(highlighter);
         children.push(highlighter);
         }
