@@ -53,11 +53,17 @@ function enableCam(event) {
 
   var children = [];
 
+  var k = 0
+
   function predictWebcamTF() {
     
       // Now let's start classifying a frame in the stream.
     detectTFMOBILE(video).then(function () {
-      window.alert("hi"+video.videoWidth.toString()+video.videoHeight.toString());
+      if (k=0){
+        resolution_log=document.getElementById("resoultioncheckid")
+        resolution_log.innerHTML="hi width: "+video.videoWidth.toString()+ " height: " +video.videoHeight.toString()
+      k=1
+      }
         // Call this function again to keep predicting when the browser is ready.
         window.requestAnimationFrame(predictWebcamTF);
     });
