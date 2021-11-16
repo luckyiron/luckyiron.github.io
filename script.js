@@ -46,7 +46,7 @@ function enableCam(event) {
     // Activate the webcam stream.
     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
       video.srcObject = stream;
-      window.alert("hi"+$video.videoWidth.toString()+$video.videoHeight.toString());
+      
       video.addEventListener('loadeddata', predictWebcamTF);
     });
   }
@@ -57,6 +57,7 @@ function enableCam(event) {
     
       // Now let's start classifying a frame in the stream.
     detectTFMOBILE(video).then(function () {
+      window.alert("hi"+video.videoWidth.toString()+video.videoHeight.toString());
         // Call this function again to keep predicting when the browser is ready.
         window.requestAnimationFrame(predictWebcamTF);
     });
