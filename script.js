@@ -174,7 +174,7 @@ async function detectTFMOBILE(imgToPredict) {
 
 // https://storage.googleapis.com/mybucket_tfjs/model.json
 var model = undefined;
-model_url = 'https://storage.googleapis.com/mybucket_tfjs/model.json';
+model_url = 'https://raw.githubusercontent.com/luckyiron/luckyiron.github.io/main/tfjsexportmodel/model.json';
 //Call load function
 asyncLoadModel(model_url);
 
