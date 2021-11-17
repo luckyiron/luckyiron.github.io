@@ -39,6 +39,7 @@ function enableCam(event) {
     
     // getUsermedia parameters to force video but not audio.
     const constraints = {
+      audio: false,
       video: {
         facingMode: "environment" ,
         width: { ideal: 640 }, 
@@ -50,7 +51,10 @@ function enableCam(event) {
     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
       video.srcObject = stream;
       
-      video.addEventListener('loadeddata', predictWebcamTF);
+      // video.addEventListener('loadeddata', predictWebcamTF);
+      video.onloadedmetadata = (event) => {
+        predictWebcamTF();
+      };
     });
   }
 
