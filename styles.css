@@ -44,5 +44,19 @@ body {
   }
 
   .invisible {
-      display: none;
+      visibility: hidden;
+  }
+
+  body {
+    overflow: hidden;
+    margin: 0;
+  }
+  
+  .ui {
+    position: absolute;
+    display:flex;
+  }
+  
+  button{
+    margin: 20px;
   }
