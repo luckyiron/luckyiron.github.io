@@ -165,7 +165,7 @@ function enableCam(event) {
 
   if (started === 0){
       started = 1;
-      document.getElementById("webcamButton").innerHTML = "Stop Camera";
+      document.getElementById("webcamButton").innerHTML = "Stop Cam";
       if (!model) {
         return;
       }
@@ -302,7 +302,7 @@ function renderPredictionBoxes (predictionBoxes, predictionClasses, predictionSc
         
         if (shoe_object !== "notloaded_yet"){
           shoe_object.position.x = intersects[0].point.x 
-          shoe_object.position.y = intersects[0].point.y 
+          shoe_object.position.y = intersects[0].point.y - 0.02;
           shoe_object.position.z=0
           // shoe_object.rotation.y =
           
@@ -328,7 +328,7 @@ function renderPredictionBoxes (predictionBoxes, predictionClasses, predictionSc
         
         if (shoe_object !== "notloaded_yet"){
           shoe_object_left.position.x = intersects_left[0].point.x 
-          shoe_object_left.position.y = intersects_left[0].point.y 
+          shoe_object_left.position.y = intersects_left[0].point.y - 0.02 ;
           shoe_object_left.rotation.y=-275*(Math.PI/180);
           shoe_object_left.rotation.z=45
           // 
