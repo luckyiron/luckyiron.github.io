@@ -106,39 +106,69 @@ function renderPredictionBoxes (predictionBoxes, predictionClasses, predictionSc
         liveView.removeChild(children[i]);
     }
     children.splice(0);
+
+    let top_i = predictionScores.indexOf(Math.max(...predictionScores))
+    let second_top_arr = JSON.parse(JSON.stringify(predictionScores));
+    second_top_arr.splice(top_i,1)
+    let two_top_i = predictionScores.indexOf(Math.max(...second_top_arr))
+
+    indices = [top_i,two_top_i]
+
+    for (let i = 0; i < 2; i++) {
+      // console.log(predictionScores.length)
+        
+
+      if (predictionScores[indices[i]]*100 > 55 && predictionScores[indices[i]]*100 <= 100){
+         
+
+      const minY = (predictionBoxes[indices[i]][0] * video.videoHeight).toFixed(0);
+      const minX = (predictionBoxes[indices[i]][1] * video.videoWidth).toFixed(0);
+      const maxY = (predictionBoxes[indices[i]][2] * video.videoHeight).toFixed(0);
+      const maxX = (predictionBoxes[indices[i]][3] * video.videoWidth ).toFixed(0);
+      const score = predictionScores[indices[i]] * 100;
+      const width_ = (maxX-minX)
+      const height_ = (maxY-minY)
+     
+
+      
+      const highlighter = document.createElement('div');
+      highlighter.setAttribute('class', 'highlighter');
+      highlighter.style = 'left: ' + minX + 'px; ' +
+          'top: ' + minY + 'px; ' +
+          'width: ' + width_ + 'px; ' +
+          'height: ' + height_ + 'px;';
+      highlighter.innerHTML = '<p>'+Math.round(score) + '% ' + 'foot'+"width:"+video.videoWidth.toString()+ " height:" +video.videoHeight.toString() +'</p>';
+      liveView.appendChild(highlighter);
+      children.push(highlighter);
+      }
+  }
 //Loop through predictions and draw them to the live view if they have a high confidence score.
-    for (let i = 0; i < 99; i++) {
+    // for (let i = 0; i < 99; i++) {
         
-//If we are over 66% sure we are sure we classified it right, draw it!
-        
-//If confidence is above 70%
-        if (predictionScores[i]*100 > 75 && predictionScores[i]*100 <= 100){
-            // console.log("hi",video.videoWidth,video.videoHeight)
-            // console.log(predictionBoxes[i],predictionClasses[i],predictionScores[i])
 
-        const minY = (predictionBoxes[i][0] * video.videoHeight).toFixed(0);
-        const minX = (predictionBoxes[i][1] * video.videoWidth).toFixed(0);
-        const maxY = (predictionBoxes[i][2] * video.videoHeight).toFixed(0);
-        const maxX = (predictionBoxes[i][3] * video.videoWidth ).toFixed(0);
-        const score = predictionScores[i] * 100;
-        const width_ = (maxX-minX)
-        const height_ = (maxY-minY)
-        console.log(minX,minY,maxX,maxY)
+    //     if (predictionScores[i]*100 > 65 && predictionScores[i]*100 <= 100){
 
-        // drawImge(minX,minY);
+    //     const minY = (predictionBoxes[i][0] * video.videoHeight).toFixed(0);
+    //     const minX = (predictionBoxes[i][1] * video.videoWidth).toFixed(0);
+    //     const maxY = (predictionBoxes[i][2] * video.videoHeight).toFixed(0);
+    //     const maxX = (predictionBoxes[i][3] * video.videoWidth ).toFixed(0);
+    //     const score = predictionScores[i] * 100;
+    //     const width_ = (maxX-minX)
+    //     const height_ = (maxY-minY)
+       
 
         
-        const highlighter = document.createElement('div');
-        highlighter.setAttribute('class', 'highlighter');
-        highlighter.style = 'left: ' + minX + 'px; ' +
-            'top: ' + minY + 'px; ' +
-            'width: ' + width_ + 'px; ' +
-            'height: ' + height_ + 'px;';
-        highlighter.innerHTML = '<p>'+Math.round(score) + '% ' + 'foot'+"width:"+video.videoWidth.toString()+ " height:" +video.videoHeight.toString() +'</p>';
-        liveView.appendChild(highlighter);
-        children.push(highlighter);
-        }
-    }
+    //     const highlighter = document.createElement('div');
+    //     highlighter.setAttribute('class', 'highlighter');
+    //     highlighter.style = 'left: ' + minX + 'px; ' +
+    //         'top: ' + minY + 'px; ' +
+    //         'width: ' + width_ + 'px; ' +
+    //         'height: ' + height_ + 'px;';
+    //     highlighter.innerHTML = '<p>'+Math.round(score) + '% ' + 'foot'+"width:"+video.videoWidth.toString()+ " height:" +video.videoHeight.toString() +'</p>';
+    //     liveView.appendChild(highlighter);
+    //     children.push(highlighter);
+    //     }
+    // }
 }
 
 // ..............................................................
@@ -150,7 +180,7 @@ var classProbThreshold = 0.75;//40%
 //Image detects object that matches the preset:
 async function detectTFMOBILE(imgToPredict) {
 
-    
+  tf.engine().startScope()
 
     //Get next video frame:
     await tf.nextFrame();
@@ -165,9 +195,12 @@ async function detectTFMOBILE(imgToPredict) {
     var tf4d_ = tf.tensor4d(Array.from(resized.dataSync()), [1,video.videoHeight, video.videoWidth, 3]);
     const tf4d = tf.cast(tf4d_, 'int32');
 
+
+    
     //Perform the detection with your layer model:
     let predictions = await model.executeAsync(tf4d);
     // console.log(await predictions[2].array())
+    
 
     const boxes = await predictions[6].array()
     const classes = await predictions[3].array()
@@ -184,7 +217,7 @@ async function detectTFMOBILE(imgToPredict) {
     tf4d.dispose();
     tf.dispose(predictions);
     
-    
+    tf.engine().endScope();
 }
 
 
